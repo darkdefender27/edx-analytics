@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+{% load staticfiles %}
+<html>
+<head>
+    <title>
+        edX Analytics
+    </title>
+
+    <!-- Bootstrap CSS -->
+    <link href="{% static 'css/bootstrap.css'%} " rel="stylesheet">
+    <link href="{% static 'css/dashboard.css'%} " rel="stylesheet">
+
+    <!-- Bootstrap & Core JavaScript -->
+
+    <script type="text/javascript" src="{% static 'js/jquery.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/highcharts.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/modules/exporting.js' %}"></script>
+
+    <script type="text/javascript" src="{% static 'js/bootstrap.min.js' %}"></script>
+
+
+</head>
+<body>
+
+    <!-- HEADER -->
+
+    <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+                <a class="navbar-brand" href="/">Data Visualisation</a>
+        </div>
+        <div class="navbar-collapse collapse">
+          <ul class="nav navbar-nav navbar-right">
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- SIDE PANEL -->
+
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-sm-3 col-md-2 sidebar">
+          <ul class="nav nav-sidebar">
+            <li><a href="/index/">Index Page</a></li>
+            <li><a href="/stats1/">Statistics - I</a></li>
+            <li><a href="/stats2/">Statistics - II</a></li>
+            <li><a href="/stats3/">Statistics - III</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- BASE CSS ENDS HERE -->
+
+
+{% block body_block %}
+{% endblock %}
+
+
+</body>
+</html>

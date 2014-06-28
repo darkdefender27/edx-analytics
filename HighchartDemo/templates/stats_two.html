@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+{% load staticfiles %}
+<html>
+<head>
+    <title>
+        Stats One
+    </title>
+
+
+    <!-- Bootstrap CSS -->
+    <link href="{% static 'css/bootstrap.css'%} " rel="stylesheet">
+    <link href="{% static 'css/dashboard.css'%} " rel="stylesheet">
+
+    <script type="text/javascript" src="{% static 'js/bootstrap.min.js' %}"></script>
+
+		<!-- 1. Add these JavaScript inclusions in the head of your page -->
+		<script type="text/javascript" src="{% static 'js/jquery.min.js' %}"></script>
+		<script src="{% static 'js/highcharts.js' %}"></script>
+
+
+		<script type="text/javascript">
+
+		$(document).ready(function() {
+			var options = {
+				chart: {
+					renderTo: 'container',
+					type: 'column'
+				},
+				title: {
+					text: 'Dropout Rate vs Level of Education'
+				},
+                subtitle: {
+                    text: 'Source: www.edX.org',
+                    x: -20
+                },
+				xAxis: {
+                    title: {
+                        enabled: true,
+                        text: 'Level of Education'
+                    },
+					categories: []
+				},
+				yAxis: {
+					title: {
+						text: 'Dropout Rate'
+					}
+				},
+				series: []
+			};
+
+			/*
+			 Load the data from the CSV file. This is the contents of the file:
+
+				Apples,Pears,Oranges,Bananas,Plums
+				John,8,4,6,5
+				Jane,3,4,2,3
+				Joe,86,76,79,77
+				Janet,3,16,13,15
+
+			 */
+			$.get("{% static 'data/d2.csv' %}", function(data) {
+				// Split the lines
+				var lines = data.split('\n');
+				$.each(lines, function(lineNo, line) {
+					var items = line.split(',');
+
+					// header line containes categories
+					if (lineNo == 0) {
+						$.each(items, function(itemNo, item) {
+							if (itemNo > 0) options.xAxis.categories.push(item);
+						});
+					}
+
+					// the rest of the lines contain data with their name in the first position
+					else {
+						var series = {
+							data: []
+						};
+						$.each(items, function(itemNo, item) {
+							if (itemNo == 0) {
+								series.name = item;
+							} else {
+								series.data.push(parseFloat(item));
+							}
+						});
+
+						options.series.push(series);
+					}
+				});
+				var chart = new Highcharts.Chart(options);
+			});
+		});
+		</script>
+</head>
+
+<body>
+
+
+    <!-- HEADER -->
+
+    <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+                <a class="navbar-brand" href="/">Data Visualisation</a>
+        </div>
+        <div class="navbar-collapse collapse">
+          <ul class="nav navbar-nav navbar-right">
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- SIDE PANEL -->
+
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-sm-3 col-md-2 sidebar">
+          <ul class="nav nav-sidebar">
+            <li><a href="/index/">Index Page</a></li>
+            <li><a href="/stats1/">Statistics - I</a></li>
+            <li><a href="/stats2/">Statistics - II</a></li>
+            <li><a href="/stats3/">Statistics - III</a></li>
+            <li><a href="/stats4/">Statistics - IV</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- BASE CSS ENDS HERE -->
+
+
+    <!-- 3. Add the container -->
+    <div id="container" style="padding-top:2cm; width: 800px; height: 400px; margin: 0 auto"></div>
+
+
+        <script src="{% static 'js/highcharts.js' %}"></script>
+        <script src="{% static 'js/modules/exporting.js' %}"></script>
+
+</body>
+</html>
